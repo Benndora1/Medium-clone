@@ -12,7 +12,7 @@ export interface Post {
            urs: string;
        };
    };
-   slugs: {
+   slug: {
        current: string;
    };
    body: [object];

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import Header from '../components/Header'
 import { sanityClient, urlFor } from '../sanity' ;
 import { Post } from '../typings';
@@ -7,7 +8,7 @@ interface Props {
   posts: [Post];
 }
 
-export default function Home(props : Props) {
+export default function Home( { posts } : Props) {
   return (
     <div className="max-w-7xl mx-auto">
       <Head>
@@ -31,6 +32,17 @@ export default function Home(props : Props) {
     src="https://accountabilitylab.org/wp-content/uploads/2020/03/Medium-logo.png" alt=""/>
     </div>
    {/* post */}
+   <div>
+     {posts.map((post) =>(
+       <Link key={post._id} href={`/post/${post.slug.current}`}>
+     <div>
+       <img scr={
+          urlFor(post.mainImage).url()!  
+       } alt=""/>
+     </div>
+      </Link>
+     ))}
+   </div>
     </div>
   );
 }
@@ -53,7 +65,7 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-    post
+    posts: post
     },
   };
 
